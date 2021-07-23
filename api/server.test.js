@@ -24,7 +24,7 @@ afterAll( async () => {
   await db.destroy()
 })
 
-describe('[POST] /auth/register', () => {
+describe('[POST] /api/auth/register', () => {
 
   test('responds with status code 201', async () => {
     const res = await request(server).post('/api/auth/register').send(user1)
@@ -38,16 +38,22 @@ describe('[POST] /auth/register', () => {
   })
 })
 
-describe('[POST] /auth/login', () => {
+describe('[POST] /api/auth/login', () => {
   test('responds with status code 201', async () => {
-    await request(server).post('/auth/register').send(user1)
-    const res = await request(server).post('/auth/login').send(user1)
-    expect(res.status).toBe(201)
+    await request(server).post('/api/auth/register').send(user1)
+    const res = await request(server).post('/api/auth/login').send(user1)
+    expect(res.status).toBe(200)
   })
 
   test('responds with welcome message', async () => {
     await request(server).post('/auth/register').send(user1)
-    const res = await request(server).post('/auth/login').send(user1)
-    expect(res.body).toMatchObject({message: /Welcome back user1/i})
+    const res = await request(server).post('/api/auth/login').send(user1)
+    expect(res.body.message).toMatch(/welcome, user1/i)
+  })
+})
+
+describe('[GET] /api/jokes', () => {
+  test('responds with status code 401', async () => {
+    
   })
 })

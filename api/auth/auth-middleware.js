@@ -1,7 +1,7 @@
 const db = require('../../data/dbConfig')
 
 
-const userExists = async (req, res, next) => {
+const userCheck = async (req, res, next) => {
     try{
         const { username } = req.body
         const user = await db('users').where({username})
@@ -15,7 +15,7 @@ const userExists = async (req, res, next) => {
     }
 }
 
-const validCred = (req, res, next) => {
+const bodyCheck = (req, res, next) => {
     const { username, password } = req.body
     if (username === undefined || password === undefined){
         next({ status: 422, message: 'username and password are required'})
@@ -24,6 +24,6 @@ const validCred = (req, res, next) => {
 }
 
 module.exports = {
-    userExists,
-    validCred,
+    userCheck,
+    bodyCheck,
 }
