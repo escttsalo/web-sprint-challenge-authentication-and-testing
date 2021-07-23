@@ -4,8 +4,9 @@ const db = require('../../data/dbConfig')
 const tokenBuilder = require('./token-builder')
 const { userCheck, bodyCheck } = require('./auth-middleware')
 
-router.post('/register', userCheck, bodyCheck, async (req, res, next) => {
+router.post('/register', bodyCheck, userCheck, async (req, res, next) => {
   try {
+    console.log(req.body)
     let user = req.body
 
     const rounds = process.env.BCRYPT_ROUNDS || 8
@@ -14,8 +15,8 @@ router.post('/register', userCheck, bodyCheck, async (req, res, next) => {
     user.password = hash
 
     const new_id = await db('users').insert(user)
-    const newUser = await db('users').where("id", new_id)
-    res.status(201).json(newUser)
+    // const newUser = await db('users').where("id", new_id)
+    res.status(201).json(new_id)
   } catch (err) {
     next(err)
   }
