@@ -15,8 +15,8 @@ router.post('/register', bodyCheck, userCheck, async (req, res, next) => {
     user.password = hash
 
     const new_id = await db('users').insert(user)
-    // const newUser = await db('users').where("id", new_id)
-    res.status(201).json(new_id)
+    const newUser = await db('users').where("id", new_id)
+    res.status(201).json(newUser)
   } catch (err) {
     next(err)
   }
