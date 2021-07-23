@@ -11,7 +11,6 @@ const { userCheck, bodyCheck } = require('./auth-middleware')
 //bodyCheck first otherwise it breaks! 
 router.post('/register', bodyCheck, userCheck, async (req, res, next) => {
   try {
-    console.log(req.body)
     let user = req.body
 
     const rounds = process.env.BCRYPT_ROUNDS || 8
